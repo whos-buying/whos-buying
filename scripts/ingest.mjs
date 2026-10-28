@@ -187,10 +187,12 @@ async function loadPrincipalCommittees(candidateIds) {
 async function loadCandidates() {
   const all = [];
   for (const office of ['S', 'H']) {
+    // Two-year (2025-26) totals. Full-term Senate totals span six years and
+    // would fold in a candidate's earlier campaigns.
     const rows = await fecAllPages('/candidates/totals/', {
       election_year: CYCLE,
       office,
-      election_full: true,
+      election_full: false,
       has_raised_funds: true,
       sort: '-receipts',
     });
@@ -242,6 +244,10 @@ async function loadOutsideSpending(candidateIds) {
   for (const ids of chunk(candidateIds, 40)) {
     rows.push(...(await fecAllPages('/schedules/schedule_e/by_candidate/', {
       cycle: CYCLE,
+      // Defaults to true, which for Senate candidates means the whole six-year
+      // term (2021-26): a candidate who also ran in 2024, like Mike Rogers,
+      // would carry that race's spending into 2026. Rows still say cycle 2026.
+      election_full: false,
       candidate_id: ids,
       sort: '-total',
     })));

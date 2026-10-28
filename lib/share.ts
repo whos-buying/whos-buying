@@ -1,11 +1,11 @@
 import { getCommittee, type Race } from "./data";
-import { money, raceTitle, titleCase } from "./format";
+import { money, orgName, raceTitle } from "./format";
 
 /** Named spenders, biggest first: the pooled no-ID filers aren't one group. */
 export const namedSpenders = (race: Race) =>
   race.spenders
     .filter((s) => s.committeeId !== "OTHER")
-    .map((s) => ({ ...s, displayName: titleCase(getCommittee(s.committeeId)?.name ?? s.name) }));
+    .map((s) => ({ ...s, displayName: orgName(getCommittee(s.committeeId)?.name ?? s.name) }));
 
 export const topSpenderName = (race: Race) => namedSpenders(race)[0]?.displayName ?? null;
 

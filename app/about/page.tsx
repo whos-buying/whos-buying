@@ -6,7 +6,7 @@ export const metadata = { title: "How it works" };
 const SOURCES = [
   {
     what: "Outside spending",
-    how: "Independent expenditures reported to the FEC, including the 24- and 48-hour reports groups must file in the final weeks. Added up per candidate, split into money to help and money to attack.",
+    how: "Independent expenditures for the 2025–26 cycle reported to the FEC, including the 24- and 48-hour reports groups must file in the final weeks. Added up per candidate, split into money to help and money to attack.",
     href: "https://www.fec.gov/data/independent-expenditures/",
   },
   {
@@ -21,7 +21,7 @@ const SOURCES = [
   },
   {
     what: "Campaign money",
-    how: "Each campaign's total receipts, money from PACs, and money from individuals giving over $200 (the FEC only names donors above $200).",
+    how: "Each campaign's receipts for 2025–26 (earlier campaigns by the same candidate are left out), money from PACs, and money from individuals giving over $200 (the FEC only names donors above $200).",
     href: "https://www.fec.gov/data/candidates/",
   },
   {

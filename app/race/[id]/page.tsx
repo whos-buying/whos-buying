@@ -138,7 +138,7 @@ function CandidateCard({ c, maxOutside }: { c: Candidate; maxOutside: number }) 
       </div>
 
       <dl className="mt-3 grid grid-cols-3 gap-2 text-center">
-        <Stat label="Campaign raised" value={money(c.receipts)} />
+        <Stat label="Raised 2025–26" value={money(c.receipts)} />
         <Stat label="From PACs" value={`${pct(c.fromPacs, c.receipts)}%`} sub={money(c.fromPacs)} />
         <Stat label="From $200+ donors" value={`${pct(c.fromBigDonors, c.receipts)}%`} sub={money(c.fromBigDonors)} />
       </dl>

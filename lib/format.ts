@@ -15,7 +15,7 @@ export const moneyExact = (n: number) =>
 export const pct = (part: number, whole: number) => (whole > 0 ? Math.round((part / whole) * 100) : 0);
 
 const SMALL_WORDS = new Set(['of', 'for', 'and', 'the', 'in', 'to', 'on', 'a', 'an', 'at', 'by']);
-const KEEP_UPPER = new Set(['PAC', 'USA', 'US', 'LLC', 'II', 'III', 'IV', 'AFL-CIO', 'SEIU', 'NRA', 'AFSCME', 'UAW', 'NEA', 'AFT', 'DC', 'LCV', 'NRCC', 'DCCC', 'NRSC', 'DSCC', 'CLF', 'SLF', 'HMP', 'LGBTQ', 'AAPI', 'AIPAC', 'UDP', 'IBEW', 'UFCW', 'GOP', 'MAGA', 'FWD', 'AI']);
+const KEEP_UPPER = new Set(['PAC', 'AFP', 'CVA', 'USA', 'US', 'LLC', 'II', 'III', 'IV', 'AFL-CIO', 'SEIU', 'NRA', 'AFSCME', 'UAW', 'NEA', 'AFT', 'DC', 'LCV', 'NRCC', 'DCCC', 'NRSC', 'DSCC', 'CLF', 'SLF', 'HMP', 'LGBTQ', 'AAPI', 'AIPAC', 'UDP', 'IBEW', 'UFCW', 'GOP', 'MAGA', 'FWD', 'AI']);
 
 /** FEC names are ALL CAPS. Make them readable without mangling acronyms. */
 export function titleCase(s: string | null | undefined): string {
@@ -97,4 +97,10 @@ export function fecRaceOutsideUrl(r: Pick<Race, 'office' | 'state' | 'district'>
   });
   if (r.office === 'H' && r.district) q.set('candidate_office_district', r.district);
   return `https://www.fec.gov/data/independent-expenditures/?${q}`;
+}
+
+/** Readable short form of a committee name: drops "DBA ..." aliases and long parentheticals. */
+export function orgName(fecName: string | null | undefined): string {
+  const name = titleCase(fecName).replace(/,?\s+dba\s.*$/i, '');
+  return name.length > 40 ? name.replace(/\s*\([^)]*\)/g, '').replace(/,?\s+Inc\.?$/i, '') : name;
 }
