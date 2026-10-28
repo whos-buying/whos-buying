@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* Receipt paper + protest-poster ink. Support/oppose always carry a text
+   label too, so color is never the only signal. */
+:root {
+  --paper: #f5f2ea;
+  --card: #fffdf8;
+  --ink: #141414;
+  --muted: #5d5a53;
+  --line: #dcd6c8;
+  --against: #c8261b;
+  --for: #1d7448;
+  --highlight: #ffd84d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e0e0d;
+    --card: #191917;
+    --ink: #f2efe6;
+    --muted: #a7a399;
+    --line: #2f2e2a;
+    --against: #ff6253;
+    --for: #4dca8c;
+    --highlight: #ffd84d;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-against: var(--against);
+  --color-for: var(--for);
+  --color-highlight: var(--highlight);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+  --font-display: var(--font-anton);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.mark {
+  background: linear-gradient(transparent 55%, var(--highlight) 55%);
+  color: inherit;
+  padding: 0 0.1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mark {
+    background: linear-gradient(transparent 55%, color-mix(in srgb, var(--highlight) 45%, transparent) 55%);
+  }
+}
+
+.receipt-edge {
+  background-image: radial-gradient(circle at 6px 0, transparent 5px, var(--card) 5.5px);
+  background-size: 12px 8px;
+  background-repeat: repeat-x;
+  height: 8px;
+}

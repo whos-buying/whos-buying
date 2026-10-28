@@ -1,0 +1,40 @@
+name: Refresh FEC data
+
+# Re-pulls FEC filings and commits the new snapshot; the host redeploys on push.
+# Needs a repository secret FEC_API_KEY (free key from api.data.gov).
+on:
+  schedule:
+    - cron: "15 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Pull FEC data
+        run: node scripts/ingest.mjs
+        env:
+          FEC_API_KEY: ${{ secrets.FEC_API_KEY }}
+      - name: Commit if changed
+        run: |
+          if git diff --quiet data/snapshot.json; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "fec-refresh-bot"
+          git config user.email "fec-refresh-bot@users.noreply.github.com"
+          git add data/snapshot.json
+          git commit -m "Refresh FEC data"
+          git push
